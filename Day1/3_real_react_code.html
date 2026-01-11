@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+
+    <!-- <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script> -->
+    <script>
+
+
+        // In original react code from React 18 looks like this if we use React CDN
+
+        // const element = React.createElement(
+        //     'h1',
+        //     {style: {color:'red', backgroundColor: 'yellow'}},
+        //     "This heading is created using React 18 CDN"
+        // );
+
+        // console.log(element);
+        
+
+        // ReactDOM.render(element, document.getElementById('root'));
+
+        // Now lets write/imitate the React.createElement() function by ourselves
+
+        const React = {
+            createElement: function(type, props, ...children){
+                return {
+                    type: type,
+                    props: {
+                        ...props,   // copies an object simply into another, ## spread operator
+                        children: children.length===1 ? children[0]:children
+                    }
+
+                }
+            }
+        }
+
+        const ReactDOM = {
+            render: function(element, container) {
+                if(typeof element === 'string' || typeof element==='number'){
+                    const textNode = document.createTextNode(element);
+                    container.appendChild(textNode);
+                    return;
+                }
+
+                const dom = document.createElement(element.type);
+                if(element.props){
+                    for (const key in element.props) {
+                        if(key==="children") continue;
+                        dom[key] = element.props[key];
+                    }
+                }
+
+                const children = element.props.children;
+                if(Array.isArray(children)){
+                    children.forEach(child => ReactDOM.render(child, dom));
+                }else if(children){
+                    ReactDOM.render(children, dom);
+                }
+                container.appendChild(dom);
+            }
+        }
+
+        const element = React.createElement('div', {style:{color:'red', background: 'yellow'}}, "Hello", React.createElement('h1', null, "This heading is nested element"))
+        console.log(element);
+        
+        ReactDOM.render(element, document.getElementById('root'));    
+
+
+    </script>
+</body>
+</html>

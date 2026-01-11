@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="root">
+
+    </div>
+
+    <script>
+
+
+
+        // const React = {
+        //     createElement : function(tag, attributes, children){                
+        //         const element1 = document.createElement(tag);
+        //             for (const attribute in attributes) {                
+        //                 // look carefully, here we need to specify the typeof as object otherwise it will find all the key values as undefined thinking style as a string
+                        
+
+        //                 if (attribute==="style" && typeof attributes[attribute]==="object") {
+        //                     for (const key in attributes[attribute]) {
+        //                         element1.style[key] = attributes[attribute][key];
+        //                         console.log(attributes[attribute][key]);                        
+        //                     }
+
+        //                     // we can also do it with another way which is :
+        //                     Object.assign(element1.style, attributes.style);
+        //                 }else{
+        //                     element1[attribute] = attributes[attribute];
+        //                 }                
+        //             }
+        //             // element1.append(children);
+        //             return element1;
+        //         }
+        // }
+
+        // const ReactDOM = {
+        //     render: function(element){
+        //         document.querySelector('.root').append(element);
+        //     }
+        // }
+
+
+        // let attribute = {className: 'heading', id:"heading1", textContent: 'This is heading 1', style: {color:'red', backgroundColor:'yellow'}}
+        // const element1 = React.createElement('h1', attribute, null);
+        // ReactDOM.render(element1)
+        
+
+        // we are writing a function to create any element simply by passing element properlty
+        // How is it better than normal JS code
+
+        // here we write a function at once and then just call the fucntion by passing attributes, thus 
+        // we do not need to explicitly write the code to create each element, also we use loop inside for further redability and
+        // less text
+
+        const prop = {className: 'my-class', style: {color: 'red', backgroundColor: "yellow"}}
+
+        const createElement = function(tag, props, child){
+            const element1 = document.createElement(tag);
+            for (const prop in props) {
+                if (prop==="style") {
+                    for (const key in props[prop]) {
+                        element1[prop][key] = props[prop][key];                     
+                    }
+                }else{
+                    element1[prop] = props[prop];
+                }
+            }
+            element1.innerHTML = child;
+            return element1;
+
+        }
+
+        const element1 = createElement('h1', prop, "Hey How are you")
+
+        document.querySelector('div').appendChild(element1);
+
+
+    </script>
+</body>
+</html>
