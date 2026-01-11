@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="root">
+
+    </div>
+
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const element = React.createElement('h1', {id:'element1_id'}, "This element is created using react 18");
+        const root = ReactDOM.createRoot(document.querySelector('.root'));
+        // root.render(element)
+
+        // This is react logical code but this code is still not that convinient to write
+        // Also in this code if we need to insert 2 elements in root that has to entered in same element 
+        // which will further be inserted into root class, let me show you with example code
+
+        const element2 = React.createElement('div',
+             {id: 'parent-div'},
+             React.createElement('h1', {id: 'header1', class:'header', style:{color:'red', backgroundColor: 'wheat'}}, "This is header element nested inside div"),
+             React.createElement('p', {id:'para1', class: 'para-tag'}, "This is paragraph nested in div element")
+        )
+
+        root.render(element2);
+
+        // so now If I have to insert 10 elements, then I have to write much and also bit unfamiliar
+        // So now the ideal syntax is that we always make elements using HTML syntax only, where we get JS logic to replucate
+        // the same element and write shorter readable code
+
+        // we use Babel here to understand HTML type code in JS code snippet
+
+        const element3 = <h1 className="heading1">This heading element is created using babel </h1>;
+        root.render(element3);
+
+        const element4 =  ( <div>  
+            <h1 className="heading1">This heading element is created using babel </h1>
+            <p> This sample para </p>
+             </div>);
+
+        root.render(element4);
+        
+        
+    </script>
+</body>
+</html>
